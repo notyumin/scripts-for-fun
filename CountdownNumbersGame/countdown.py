@@ -65,4 +65,5 @@ def checkCanBeDone(numbers: 'list[int]', target: int) -> bool:
     return False
 
 
-checkCanBeDone(numbers, target)
+if checkCanBeDone(numbers, target) == False:
+    print("There is no solution")
