@@ -1,25 +1,25 @@
 alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 
 
-def generateKeyFromPhrase(keyPhrase: str) -> str:
-    keyPhrase = keyPhrase.upper()
-    key = ""
-    for letter in keyPhrase:
-        key = key.__add__(letter)
+def getCipherAlpha(keyword: str) -> str:
+    keyword = keyword.upper()
+    cipherAlphabet = ""
+    for letter in keyword:
+        cipherAlphabet = cipherAlphabet.__add__(letter)
     for letter in alphabet:
-        if key.find(letter) == -1:
-            key = key.__add__(letter)
+        if cipherAlphabet.find(letter) == -1:
+            cipherAlphabet = cipherAlphabet.__add__(letter)
 
-    return key
+    return cipherAlphabet
 
 
-def encryptMessage(plainText: str, alphabet: str, key: str) -> str:
+def encryptMessage(plainText: str, alphabet: str, cipherAlphabet: str) -> str:
     cipherText = ""
     for letter in plainText:
         index = alphabet.find(letter.upper())
         # if char is not a letter
         if index != -1:
-            cipherLetter = key[index]
+            cipherLetter = cipherAlphabet[index]
         else:
             cipherLetter = letter
         cipherText = cipherText.__add__(cipherLetter)
@@ -27,10 +27,10 @@ def encryptMessage(plainText: str, alphabet: str, key: str) -> str:
     return cipherText
 
 
-def decryptMessage(cipherText: str, alphabet: str, key: str) -> str:
+def decryptMessage(cipherText: str, alphabet: str, cipherAlphabet: str) -> str:
     plainText = ""
     for letter in cipherText:
-        index = key.find(letter.upper())
+        index = cipherAlphabet.find(letter.upper())
         # if char is not a letter
         if index != -1:
             plainLetter = alphabet[index]
@@ -42,26 +42,26 @@ def decryptMessage(cipherText: str, alphabet: str, key: str) -> str:
 
 
 """
-keyPhrase = "LMAO"
+keyword = "LMAO"
 plainText = "Is this the real life?"
-key = generateKeyFromPhrase(keyPhrase)
-cipherText = encryptMessage(plainText, alphabet, key)
-plainText = decryptMessage(cipherText, alphabet, key)
+cipherAlphabet = generateKeyFromPhrase(keyword)
+cipherText = encryptMessage(plainText, alphabet, cipherAlphabet)
+plainText = decryptMessage(cipherText, alphabet, cipherAlphabet)
 print(cipherText)
 print(plainText)
 """
 
-eOrD = input("Enter 'e' to encrypt and 'd' to decrypt")
-keyPhrase = input("Please enter key phrase: ")
-key = generateKeyFromPhrase(keyPhrase)
+eOrD = input("Enter 'e' to encrypt and 'd' to decrypt: ")
+keyword = input("Please enter keyword: ")
+cipherAlphabet = getCipherAlpha(keyword)
 
 if eOrD.lower() == 'e':
     plainText = input("Please enter text to be encrypted: ")
-    cipherText = encryptMessage(plainText, alphabet, key)
+    cipherText = encryptMessage(plainText, alphabet, cipherAlphabet)
     print(cipherText)
 elif eOrD.lower() == 'd':
     cipherText = input("Please enter text to be decrypted: ")
-    plainText = decryptMessage(cipherText, alphabet, key)
+    plainText = decryptMessage(cipherText, alphabet, cipherAlphabet)
     print(plainText)
 else:
     print("Invalid option")
