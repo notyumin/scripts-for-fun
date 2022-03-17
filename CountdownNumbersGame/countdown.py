@@ -39,7 +39,7 @@ def checkCanBeDone(numbers: 'list[int]', target: int) -> bool:
         return first == target
 
     for i in range(len(numbers)):
-        numbersCopy = numbers.copy()
+        numbersCopy = numbers.copy()  # Make a copy to avoid mutation
         number = numbersCopy.pop(i)
 
         # Check for +
