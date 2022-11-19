@@ -42,9 +42,9 @@
 
 Output demo.gif
 
-Set FontSize 32
-Set Width 800
-Set Height 600
+Set FontSize 12
+Set Width 450
+Set Height 500
 
 Hide
 Type "go run main.go" Enter

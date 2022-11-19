@@ -6,6 +6,7 @@ import (
 	"os"
 
 	tea "github.com/charmbracelet/bubbletea"
+	"github.com/charmbracelet/lipgloss"
 )
 
 func main() {
@@ -208,34 +209,68 @@ func placePiece(b Board, piece string, col int) (Board, error) {
 }
 
 func (m Model) View() string {
-	display := ""
+	displayRendered := []string{}
 	if !m.win {
-		display += renderCursor(m.cursorPos, m.turn)
+		displayRendered = append(displayRendered, renderCursor(m.cursorPos, m.turn))
 	} else {
-		display += fmt.Sprintf("%s wins! Press <Esc> to play again\n", m.turn)
+		displayRendered = append(displayRendered, fmt.Sprintf("%s wins! Press <Esc> to play again\n", m.turn))
 	}
-	display += renderBoard(m.board)
+	displayRendered = append(displayRendered, renderBoard(m.board))
+	display := lipgloss.JoinVertical(lipgloss.Center, displayRendered...)
 	return display
 }
 
 func renderBoard(b Board) string {
 	bString := ""
 	for _, row := range b {
-		rowString := "|"
-		for _, tile := range row {
-			rowString += tile + "|"
-		}
+		rowString := renderRow(row)
 		bString += rowString + "\n"
 	}
 	return bString
 }
 
-func renderCursor(cursorPos int, piece string) string {
-	allPos := []string{" ", " ", " ", " ", " ", " ", " "}
-	allPos[cursorPos] = piece
-	cursorLine := " "
-	for _, pos := range allPos {
-		cursorLine += pos + " "
+func renderRow(row [7]string) string {
+	rowsRendered := []string{}
+	for _, tile := range row {
+		rowsRendered = append(rowsRendered, renderTile(tile))
 	}
-	return cursorLine + "\n"
+	return lipgloss.JoinHorizontal(lipgloss.Bottom, rowsRendered...)
+}
+
+func renderTile(tile string) string {
+	colorCode := ""
+	switch tile {
+	case "Y":
+		colorCode = "#ffec96"
+	case "R":
+		colorCode = "#ff6961"
+	}
+	color := lipgloss.Color(colorCode)
+	return lipgloss.NewStyle().
+		Padding(0, 1).
+		Border(lipgloss.RoundedBorder()).
+		Foreground(color).
+		BorderForeground(color).
+		Render(tile)
+}
+
+func renderCursor(cursorPos int, piece string) string {
+	allPos := [7]string{" ", " ", " ", " ", " ", " ", " "}
+	allPos[cursorPos] = piece
+	allPosRendered := []string{}
+	for _, pos := range allPos {
+		if pos == " " {
+			allPosRendered = append(allPosRendered, renderCursorLineTile())
+		} else {
+			allPosRendered = append(allPosRendered, renderTile(pos))
+		}
+	}
+	cursorLine := lipgloss.JoinHorizontal(lipgloss.Bottom, allPosRendered...)
+	return cursorLine
+}
+func renderCursorLineTile() string {
+	return lipgloss.NewStyle().
+		Padding(0, 1).
+		Border(lipgloss.HiddenBorder()).
+		Render(" ")
 }

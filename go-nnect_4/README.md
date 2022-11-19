@@ -11,4 +11,5 @@ Logic is copied from [the Python Connect 4 game I wrote previously](../connect_4
 
 - [x] Display board and cursor
 - [x] Check win
-- [ ] Prettify output with Lipgloss
+- [x] Prettify output with Lipgloss
+- [ ] Handle draw when board is full
