@@ -4,7 +4,7 @@ A Connect 4 Terminal game written in Go using the [Bubble Tea framework](https:/
 
 Logic is copied from [the Python Connect 4 game I wrote previously](../connect_4/)
 
-**Demo**
+**Demo**  
 ![demo-gif](./demo.gif)
 
 ## Roadmap
