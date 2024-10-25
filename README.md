@@ -1,2 +1,4 @@
 # Scripts For Fun
-Scripts made for fun. For more info on each script, read the respective README in each folder.
+A bunch of scripts I made for fun, and for learning. 
+
+For more info, read the respective READMEs in each mini-project!
